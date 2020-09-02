@@ -5,7 +5,7 @@ PGM=BDS1001
 REPORT=bds1001-1.rpt
 
 # Location of copylibs
-SYSLIB="../../../../common/cpy"
+SYSLIB="../cpy"
 
 # clean up
 rm ../spool/$REPORT

@@ -25,7 +25,7 @@
            ORGANIZATION IS SEQUENTIAL.
 
            SELECT Member-File
-           ASSIGN TO "../../../data/c08-members.dat.txt"
+           ASSIGN TO "../data/c08-members.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL.
 
        DATA DIVISION.

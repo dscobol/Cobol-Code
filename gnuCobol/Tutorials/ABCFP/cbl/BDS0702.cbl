@@ -21,7 +21,7 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT EmployeeFile
-           ASSIGN TO "../../../data/c07-employee.dat.txt"
+           ASSIGN TO "../data/c07-employee.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL.
 
        DATA DIVISION.

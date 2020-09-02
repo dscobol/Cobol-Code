@@ -23,7 +23,7 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT GadgetStockFile
-           ASSIGN TO "../../../data/c07-gadgets.dat.txt"
+           ASSIGN TO "../data/c07-gadgets.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-Gadget-Status.
 

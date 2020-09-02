@@ -6,10 +6,10 @@ PGM=BDS1004
 NEWFILE=c10-4newmast.dat.txt
 
 # Location of copylibs
-SYSLIB="../../../../common/cpy"
+SYSLIB="../cpy"
 
 # clean up
-rm ../../../data/$NEWFILE
+rm ../data/$NEWFILE
 #rm ../spool/$REPORT
 rm ../bin/$PGM
 

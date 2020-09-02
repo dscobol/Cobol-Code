@@ -5,7 +5,7 @@ PGM=BDS0804
 #REPORT=Members.rpt
 
 # Location of copylibs
-SYSLIB="../../../../common/cpy"
+SYSLIB="../cpy"
 
 # clean up
 #rm ../spool/$REPORT

@@ -29,7 +29,7 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT SalesFile
-           ASSIGN TO "../../../data/c10-1testdata.dat.txt"
+           ASSIGN TO "../data/c10-1testdata.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-SaleFile-Status.
 

@@ -29,7 +29,7 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT CensusFile
-           ASSIGN TO "../../../data/c10-2testdata.dat.txt"
+           ASSIGN TO "../data/c10-2testdata.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL.
 
            SELECT SurnameReport

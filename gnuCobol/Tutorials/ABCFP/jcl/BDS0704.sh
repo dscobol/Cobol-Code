@@ -4,7 +4,7 @@
 PGM=BDS0704
 
 # Location of copylibs
-SYSLIB="../../../../common/cpy"
+SYSLIB="../cpy"
 
 # clean up
 rm ../bin/$PGM

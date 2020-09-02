@@ -30,15 +30,15 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT MasterStockFile
-           ASSIGN TO "../../../data/c10-4master.dat.txt"
+           ASSIGN TO "../data/c10-4master.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL.
 
            SELECT NewStockFile
-           ASSIGN TO "../../../data/c10-4newmast.dat.txt"
+           ASSIGN TO "../data/c10-4newmast.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL.
 
            SELECT TransactionFile
-           ASSIGN TO "../../../data/c10-4trans.dat.txt"
+           ASSIGN TO "../data/c10-4trans.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL.
 
        DATA DIVISION.
