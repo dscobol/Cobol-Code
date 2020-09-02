@@ -1,0 +1,30 @@
+      **********************************************************
+      * Program name:    GETDBID
+      * Original author: David Stagowski
+      *
+      *    Description: This is a called module to supply the 
+      *       the userid and password for the SAMPLE DB2 database.
+      *    This was written because I got tired of typing them in 
+      *    everytime I ran the program.
+      *
+      * Maintenence Log
+      * Date       Author        Maintenance Requirement
+      * ---------  ------------  -------------------------------
+      * 2020-08-18 dastagg       
+      *                          
+      *
+      **********************************************************
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. GETDBID.
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       LINKAGE SECTION.
+       01 DB-User-ID              PIC X(10).
+       01 DB-Passwd-Name          PIC X(18).
+
+       PROCEDURE DIVISION USING DB-User-ID, DB-Passwd-Name.
+           
+           MOVE 'username' TO DB-User-ID.
+           MOVE 'password' TO DB-Passwd-Name.
+
+           GOBACK.

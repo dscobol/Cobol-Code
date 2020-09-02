@@ -1,0 +1,6 @@
+/bin/*
+/cbl/*.bnd
+/spool/*
+/sql/*
+/SQLScripts/*
+/tcbl/*
