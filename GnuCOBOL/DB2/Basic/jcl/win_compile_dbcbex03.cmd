@@ -1,10 +1,17 @@
 @echo off
 setlocal
-
+:: set Program name
 set PGM=DBCBEX03
 
+:: set copybook locations
+rem To me, this looks ugly but I wanted to avoid hardcoding the
+rem location of the cpy directory on my PC. It works.
+set "CURRDIR=%cd%"
+cd ..\cpy
+set "MYCOPY=%cd%"
+cd %CURRDIR%
+
 set SQLCOPY=C:\IBM\SQLLIB\include\cobol_mf
-set MYCOPY=C:\Users\dastagg\dev\cobol\Cobol-Code\GnuCOBOL\DB2\Basic\cpy
 
 :: set env. variables
 call "C:\GC31-rc1-BDB-M64\bin\cobenv.cmd"
