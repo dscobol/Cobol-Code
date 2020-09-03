@@ -2,7 +2,7 @@ Status of Programs:
 
 ['Beginning COBOL for Programmers' by Michael Coughlan](http://www.apress.com/9781430262534) :
 
-| Program | Description                               | gnuCobol |  ZOS  |
+| Program | Description                               | GnuCOBOL |  ZOS  |
 | :------ | :---------------------------------------- | :------: | :---: |
 |         |                                           |          |       |
 | HELLO   | First Program                             |    X     |   X   |
@@ -33,10 +33,10 @@ Most of the CBLXXXX programs are fairly straight forward.
 I think my time would be better spent on more "advanced" topics like Tables, VSAM and DB2.
 
 I did convert CBL0001 to my "style" and by creating ODS000C, learned a few things.
-  * Converting COMP numbers to normal to be usable by gnuCobol.
+  * Converting COMP numbers to normal to be usable by GnuCOBOL.
   * Using MOVE CORRESPONDING - Not something I normally do but it worked well for this.
 
-| Program | Description   | gnuCobol |  ZOS  |
+| Program | Description   | GnuCOBOL |  ZOS  |
 | :------ | :------------ | :------: | :---: |
 |         |               |          |       |
 | HELLO   | First Program |    X     |   X   |

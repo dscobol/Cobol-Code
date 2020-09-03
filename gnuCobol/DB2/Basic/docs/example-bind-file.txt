@@ -1,5 +1,5 @@
 This is an example prep and bind file for 
-the pre-compile process for gnuCobol/DB2.
+the pre-compile process for GnuCOBOL/DB2.
 
 
 connect to <DB> user <username> using <password>;

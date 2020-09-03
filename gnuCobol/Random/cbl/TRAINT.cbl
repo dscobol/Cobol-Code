@@ -3,9 +3,9 @@
       * Re-written by: David Stagowski 
       *
       * Description: This is a program that will demonstrate the 
-      *    difference between gnuCobol and IBM Enterprise COBOL.
+      *    difference between GnuCOBOL and IBM Enterprise COBOL.
       * 
-      *    If you run this using gnuCobol, the result is:
+      *    If you run this using GnuCOBOL, the result is:
       *    "NUM-C IS 188"
       *
       *    If you run this on the Mainframe, the result is:

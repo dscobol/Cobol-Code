@@ -12,7 +12,7 @@ For example: Listing8-1.cbl becomes:
 
 BDS0801.cbl
 
-This code will be found at **gnuCobol:Tutorials:ABCFP**
+This code will be found at **GnuCOBOL:Tutorials:ABCFP**
 
 [The Open Mainframe Project](https://www.openmainframeproject.org/projects/coboltrainingcourse) :
 
@@ -24,7 +24,7 @@ For example: CBL0001.cobol becomes:
 
 ODS0001.cbl
 
-This code is located at both *gnuCobol and Mainframe*:**Tutorials:OMP**
+This code is located at both *GnuCOBOL and Mainframe*:**Tutorials:OMP**
 
 [Enterprise COBOL For Business Application Programming](https://community.ibm.com/community/user/ibmz-and-linuxone/viewdocument/enterprise-cobol-for-business-appli?CommunityKey=b0dae4a8-74eb-44ac-86c7-90f3cd32909a&tab=librarydocuments)
 
@@ -36,7 +36,7 @@ My Source: WSXXX
 
 Where XXX is the Workshop number, so Workshop 5.2 becomes WS52.cbl.
 
-This code is located at both *gnuCobol and Mainframe*:**Tutorials:ECBAP**
+This code is located at both *GnuCOBOL and Mainframe*:**Tutorials:ECBAP**
 
 A lot of the Workshops are modifying existing programs so the new member will just be that but in SCM to be able to restore the code if need be.
 

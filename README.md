@@ -4,7 +4,7 @@ This repository will replace both Cobol-Projects and DB2-COBOL-et-al for all COB
 
 There are three main areas:
 
-    gnuCobol: These are programs that were written to use the gnuCobol compiler.
+    GnuCOBOL: These are programs that were written to use the GnuCOBOL compiler.
 
     Mainframe: These are programs that were written to use the IBM Enterprise COBOL compiler.
 
@@ -18,9 +18,9 @@ DB2, Indexed(VSAM) and Internal-Sort.
 Within each area, there is a collection of basic
 programs for each type of processing.
 
-**However**, ALL programs in these areas are the same versions of each other BUT have been modified to run both using gnuCobol and the Mainframe.
+**However**, ALL programs in these areas are the same versions of each other BUT have been modified to run both using GnuCOBOL and the Mainframe.
 
-[gnuCobol](https://sourceforge.net/projects/gnucobol/): per the website: GnuCOBOL (formerly OpenCOBOL) is a free, modern COBOL compiler. 
+[GnuCOBOL](https://sourceforge.net/projects/gnucobol/): per the website: GnuCOBOL (formerly OpenCOBOL) is a free, modern COBOL compiler. 
 
 Mainframe: 
 I have access to 2 Mainframes thanks to IBM providing them, for free, as part of an effort to introduce

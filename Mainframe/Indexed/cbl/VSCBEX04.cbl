@@ -9,7 +9,7 @@
       *       ACCESS MODE IS RANDOM
       *       OPEN I-O
       *
-      *    The same program will run on both gnuCobol and ZOS COBOL.
+      *    The same program will run on both GnuCOBOL and ZOS COBOL.
       *    The only change is the ASSIGN TO statement.
       *
       * Maintenence Log

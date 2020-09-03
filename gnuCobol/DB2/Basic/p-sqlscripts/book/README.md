@@ -1,6 +1,6 @@
 These are the sql scripts to create the BOOK table.
 
-This is the table used in the gnuCobol/DB2 examples
+This is the table used in the GnuCOBOL/DB2 examples
 created by [László Erdős](https://sourceforge.net/p/gnucobol/contrib/HEAD/tree/trunk/samples/DBsample/DB2/).
 
 Note: to use them, you will have to change the parameters for your installation of DB2.

@@ -6,7 +6,7 @@
       *
       *    This program will delete a record from DB.
       *
-      *    There are some differences between the gnuCobol and 
+      *    There are some differences between the GnuCOBOL and 
       *       ZOS DB2 programs.
       *
       *    The biggest difference is the 9800-Connect-to-DB1 paragraph.
@@ -14,8 +14,8 @@
       *    On ZOS, the JCL makes the connection so there is no need for
       *       passing the username and password for the database.
       *
-      *    That is required with gnuCobol.
-      *    These gnuCobol programs use GETDBID, a very simple called
+      *    That is required with GnuCOBOL.
+      *    These GnuCOBOL programs use GETDBID, a very simple called
       *    module that has the username and password embedded in it.
       *    When called, it passes them up to the calling program which
       *    then uses them to make the connection to the server.
@@ -43,11 +43,12 @@
            END-EXEC.
 
       *******************
-      *    This is another BIG difference between gnuCobol
-      *    and ZOS. If the Host Variables are not declared
-      *    in gnuCobol, it is an error and it won't bind.
-      *    On ZOS, they are not required and if present, will
-      *    cause a Warning(RC=04) for the compile.
+      *    This is another BIG difference between GnuCOBOL
+      *    and ZOS. If the Host Variables are not DECLAREd
+      *    in GnuCOBOL, it is an error and it won't bind.
+      *    On ZOS, DECLAREing them is not required and if 
+      *    present, will cause a Warning(RC=04) for the compile.
+
            EXEC SQL BEGIN DECLARE SECTION END-EXEC.
        01  HV-Employee-Row.
            12 HV-Emp-Number           PIC X(06).

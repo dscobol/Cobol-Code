@@ -7,7 +7,7 @@
       *    This program will read all the records using a View supplied
       *    by the DB and print a nice report.
 
-      *    There are some differences between the gnuCobol and
+      *    There are some differences between the GnuCOBOL and
       *       ZOS DB2 programs.
       *
       *    The biggest difference is the 9800-Connect-to-DB1 paragraph.
@@ -15,8 +15,8 @@
       *    On ZOS, the JCL makes the connection so there is no need for
       *       passing the username and password for the database.
       *
-      *    That is required with gnuCobol.
-      *    These gnuCobol programs use GETDBID, a very simple called
+      *    That is required with GnuCOBOL.
+      *    These GnuCOBOL programs use GETDBID, a very simple called
       *    module that has the username and password embedded in it.
       *    When called, it passes them up to the calling program which
       *    then uses them to make the connection to the server.

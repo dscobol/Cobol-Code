@@ -9,7 +9,7 @@
       *       ACCESS MODE IS SEQUENTIAL
       *       OPEN OUTPUT
       *
-      *    The same program will run on both gnuCobol and ZOS COBOL.
+      *    The same program will run on both GnuCOBOL and ZOS COBOL.
       *    The only changes are:
       *    Flat File:  the ASSIGN TO and ORGANIZATION statement.
       *    Indexed File: the ASSIGN TO statement.
