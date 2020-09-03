@@ -15,17 +15,13 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT ACCT-REC
-           ASSIGN TO "../../../common/data/acctrec.dat.txt"
+           ASSIGN TO "../data/acctrec.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
-      *     ASSIGN TO DA-S-ACCTREC
-      *     ORGANIZATION IS SEQUENTIAL
            FILE STATUS IS WS-AcctRec-Status.
 
            SELECT PRINT-LINE
            ASSIGN TO "../spool/ODS0001-AccRpt.rpt"
            ORGANIZATION IS LINE SEQUENTIAL
-      *     ASSIGN TO DA-S-PRTLINE
-      *     ORGANIZATION IS SEQUENTIAL
            FILE STATUS IS WS-AcctRpt-Status.
 
        DATA DIVISION.
