@@ -23,7 +23,7 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT INFile
-           ASSIGN TO "../../data/customer.dat.txt"
+           ASSIGN TO "../data/customer.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-INFile-Status.
 

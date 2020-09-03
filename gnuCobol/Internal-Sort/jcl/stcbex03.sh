@@ -1,12 +1,14 @@
 #!/bin/bash
+# static parms
+SYSLIB="../cpy"
 
+# Program parms
 PGM=STCBEX03
 OUTPUT=stcbex03-out.txt
 
-# Clean Up
+# clean up
+rm ../bin/$PGM
 rm ../spool/$OUTPUT
-
-SYSLIB="../../../common/cpy"
 
 cobc -x -o ../bin/$PGM ../cbl/$PGM.cbl -I $SYSLIB
 
