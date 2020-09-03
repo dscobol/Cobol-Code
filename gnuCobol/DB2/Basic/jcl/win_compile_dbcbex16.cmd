@@ -4,7 +4,7 @@ setlocal
 set PGM=DBCBEX16
 
 set SQLCOPY=C:\IBM\SQLLIB\include\cobol_mf
-set MYCOPY=C:\Users\dastagg\dev\cobol\New-Cobol-Projects\common\cpy
+set MYCOPY=C:\Users\dastagg\dev\cobol\Cobol-Code\gnuCobol\DB2\Basic\cpy
 
 :: set env. variables
 call "C:\GC31-rc1-BDB-M64\bin\cobenv.cmd"

@@ -38,7 +38,7 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT LoadFile
-           ASSIGN TO "../../../data/employees.dat.txt"
+           ASSIGN TO "../data/employees.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL           
            FILE STATUS IS WS-LoadFile-Status.
 
