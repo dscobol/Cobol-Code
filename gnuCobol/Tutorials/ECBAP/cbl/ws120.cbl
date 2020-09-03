@@ -5,17 +5,13 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT INSCLAIM
-           ASSIGN TO "../../../common/data/ECBAP/insclaim.dat.txt"
+           ASSIGN TO "../data/insclaim.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
-      *     ASSIGN TO DA-S-INSCLAIM
-      *     ORGANIZATION IS SEQUENTIAL
            FILE STATUS IS WS-INSClaim-Status.
 
            SELECT INSRPT
            ASSIGN TO "../spool/insclaim-report.rpt"
            ORGANIZATION IS LINE SEQUENTIAL
-      *     ASSIGN TO DA-S-INSRPT
-      *     ORGANIZATION IS SEQUENTIAL
            FILE STATUS IS WS-INSRpt-Status.
 
 

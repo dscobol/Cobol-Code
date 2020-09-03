@@ -1,11 +1,13 @@
 #!/bin/bash
+# static parms
+SYSLIB="../cpy"
+LOADLIB="../bin"
 
+# program parms
 LLM=SUB01
 PGM=MAINPGM
 RPGM=CALLME
 
-SYSLIB="$DHOME/dev/cobol/Cobol-Projects/common/cpy"
-LOADLIB="../bin"
 
 # clean up
 #rm $LOADLIB/$LLM3

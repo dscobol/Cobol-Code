@@ -41,14 +41,14 @@
            SELECT EMPLOYEE
       *     ASSIGN TO EMPLOYEE
       *     ORGANIZATION IS SEQUENTIAL
-           ASSIGN TO "../../../common/data/ECBAP/employee.dat.txt"
+           ASSIGN TO "../data/employee.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-EMPLOYEE-Status.
 
            SELECT STCOURS
       *     ASSIGN TO STCOURS
       *     ORGANIZATION IS SEQUENTIAL
-           ASSIGN TO "../../../common/data/ECBAP/student-cours.dat.txt"
+           ASSIGN TO "../data/student-cours.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-STCOURS-Status.
 

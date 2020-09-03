@@ -25,37 +25,27 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT INFILE
-      *     ASSIGN TO HOSPIN
-      *     ORGANIZATION IS SEQUENTIAL
-           ASSIGN TO "../../../common/data/ECBAP/hospin.dat.txt"
+           ASSIGN TO "../data/hospin.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-INFile-Status.
 
            SELECT RPTFILE
-      *     ASSIGN TO RPTFILE
-      *     ORGANIZATION IS SEQUENTIAL
-           ASSIGN TO "../../../common/data/ECBAP/hrptfile.dat.txt"
+           ASSIGN TO "../spool/hrptfile.rpt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-HRpt-Status.
 
            SELECT OUTFILE
-      *     ASSIGN TO HOSPOUT
-      *     ORGANIZATION IS SEQUENTIAL
-           ASSIGN TO "../../../common/data/ECBAP/houtfile.dat.txt"
+           ASSIGN TO "../data/houtfile.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-OutFile-Status.
 
            SELECT ERRFILE
-      *     ASSIGN TO HOSPERR
-      *     ORGANIZATION IS SEQUENTIAL
-           ASSIGN TO "../../../common/data/ECBAP/herrfile.dat.txt"
+           ASSIGN TO "../data/herrfile.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-ErrFile-Status.
 
            SELECT INSTYPE
-      *     ASSIGN TO INSTYPE
-      *     ORGANIZATION IS SEQUENTIAL
-           ASSIGN TO "../../../common/data/ECBAP/hinstype.dat.txt"
+           ASSIGN TO "../data/hinstype.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-InsType-Status.
 

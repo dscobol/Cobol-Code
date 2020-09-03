@@ -1,9 +1,14 @@
 #!/bin/bash
+# static parms
+SYSLIB="../cpy"
 
+# Program parms
 PGM=ws532
-SYSLIB="$HOME/dev/cobol/common/cpy"
 
-cobc -x ../cbl/$PGM.cbl -I $SYSLIB -o ../bin/$PGM
+# clean up
+rm ../bin/$PGM
+
+cobc -x -o ../bin/$PGM ../cbl/$PGM.cbl -I $SYSLIB 
 
 if [ "$?" -eq 0 ]; then
     ../bin/$PGM

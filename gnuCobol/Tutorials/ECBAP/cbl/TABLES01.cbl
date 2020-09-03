@@ -16,7 +16,7 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT INPUT-FILE
-           ASSIGN TO "../../../common/data/ECBAP/emp1.proj.dat.txt"
+           ASSIGN TO "../data/emp1.proj.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL.
       *     ASSIGN TO DA-S-EMPROJ
       *     ORGANIZATION IS SEQUENTIAL.

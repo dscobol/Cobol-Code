@@ -5,22 +5,16 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT FAVIN
-           ASSIGN TO "../../../common/data/ECBAP/favin.dat.txt"
+           ASSIGN TO "../data/favin.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-Favin-Status.
-      *    SELECT FAVIN
-      *    ASSIGN TO DA-S-FAVIN
-      *       ORGANIZATION IS SEQUENTIAL
-      *       FILE STATUS IS WS-Favin-Status.
-
 
        DATA DIVISION.
        FILE SECTION.
-       FD  FAVIN.
-      *     LABEL RECORDS ARE STANDARD
-      *     RECORDING MODE IS F
-      *     BLOCK CONTAINS 0 RECORDS
-      *     RECORD CONTAINS 58 CHARACTERS.
+       FD  FAVIN
+           LABEL RECORDS ARE STANDARD
+           RECORDING MODE IS F
+           BLOCK CONTAINS 0 RECORDS.
        01  FAV-RECORD.
            12 FI-Group-Name               PIC X(30).
            12 FI-Number-Of-Musicians      PIC 9(02).

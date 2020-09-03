@@ -14,31 +14,31 @@
        FILE-CONTROL.
            SELECT INFILE
       *     ASSIGN TO HOSPIN
-           ASSIGN TO "../../../common/data/ECBAP/hospin.dat.txt"
+           ASSIGN TO "../data/hospin.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
              FILE STATUS IS IFCODE.
 
            SELECT RPTFILE
       *     ASSIGN TO RPTFILE
-           ASSIGN TO "../../../common/data/ECBAP/hrptfile.dat.txt"
+           ASSIGN TO "../data/hrptfile.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
              FILE STATUS IS RFCODE.
 
            SELECT OUTFILE
       *     ASSIGN TO HOSPOUT
-           ASSIGN TO "../../../common/data/ECBAP/houtfile.dat.txt"
+           ASSIGN TO "../data/houtfile.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
              FILE STATUS IS OFCODE.
 
            SELECT ERRFILE
       *     ASSIGN TO ERRFILE
-           ASSIGN TO "../../../common/data/ECBAP/herrfile.dat.txt"
+           ASSIGN TO "../data/herrfile.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
              FILE STATUS IS EFCODE.
 
            SELECT IT-INS-TYPE
       *     ASSIGN TO INSTYPE
-           ASSIGN TO "../../../common/data/ECBAP/hinstype.dat.txt"
+           ASSIGN TO "../data/hinstype.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
              FILE STATUS IS IT-CODE-FLAG.
 

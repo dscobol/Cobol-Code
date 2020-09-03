@@ -29,7 +29,7 @@
            SELECT TABLOAD
       *     ASSIGN TO TABLOAD
       *     ORGANIZATION IS SEQUENTIAL
-           ASSIGN TO "../../../common/data/ECBAP/becsv.dat.txt"
+           ASSIGN TO "../data/becsv.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-TABLOAD-Status.
 

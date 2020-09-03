@@ -5,7 +5,7 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT FAVIN
-           ASSIGN TO "../../../common/data/ECBAP/favin.dat.txt"
+           ASSIGN TO "../data/favin.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-Favin-Status.
            *> SELECT FAVIN

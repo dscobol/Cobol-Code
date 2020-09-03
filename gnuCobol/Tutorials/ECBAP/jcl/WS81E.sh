@@ -1,14 +1,19 @@
 #!/bin/bash
+# static parms
+SYSLIB="../cpy"
 
+# Program parms
 PGM=ws81e
-SYSLIB="$DHOME/dev/cobol/Cobol-Projects/common/cpy"
+REPORT=prope-report.rpt
 
+# clean up
+rm ../bin/$PGM
+rm ../spool/$REPORT
 
-cobc -x ../cbl/$PGM.cbl -I $SYSLIB -o ../bin/$PGM
+cobc -x -o ../bin/$PGM ../cbl/$PGM.cbl -I $SYSLIB 
 
 if [ "$?" -eq 0 ]; then
     ../bin/$PGM
 else
     echo "Complier Return code not ZERO."
 fi
-

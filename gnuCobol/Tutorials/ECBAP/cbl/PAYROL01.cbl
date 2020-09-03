@@ -4,7 +4,7 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT PAYROLL
-           ASSIGN TO "../../../common/data/ECBAP/payrol01.dat.txt"
+           ASSIGN TO "../data/payrol01.dat.txt"
              ORGANIZATION IS LINE SEQUENTIAL.
            SELECT PAYCHECK
               ASSIGN TO DISPLAY.

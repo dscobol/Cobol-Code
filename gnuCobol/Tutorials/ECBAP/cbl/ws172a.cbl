@@ -19,23 +19,16 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT STCOURS
-      *     ASSIGN TO STCOURS
-      *     ORGANIZATION IS SEQUENTIAL
-           ASSIGN TO "../../../common/data/ECBAP/student-cours.dat.txt"
+           ASSIGN TO "../data/student-cours.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-STCOURS-Status.
 
            SELECT ERRFILE
-      *     ASSIGN TO ERRFILE
-      *     ORGANIZATION IS SEQUENTIAL
-           ASSIGN TO
-              "../../../common/data/ECBAP/student-ERRFILE.dat.txt"
+           ASSIGN TO "../data/student-ERRFILE.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-ERRFILE-Status.
 
            SELECT RPTFILE
-      *     ASSIGN TO RPTFILE
-      *     ORGANIZATION IS SEQUENTIAL
            ASSIGN TO "../spool/student-grade-report.rpt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-Report-Status.
@@ -65,7 +58,6 @@
            RECORDING MODE IS F
            BLOCK CONTAINS 0 RECORDS.
        01  R1-Print-Line  PIC X(080).
-
 
        WORKING-STORAGE SECTION.
        01  WS-FILE-STATUS.

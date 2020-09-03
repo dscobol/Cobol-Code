@@ -1,9 +1,20 @@
 #!/bin/bash
+# static parms
+SYSLIB="../cpy"
 
+# Program parms
 PGM=ws162e
-SYSLIB="$DHOME/dev/cobol/Cobol-Projects/common/cpy"
+REPORT=hrptfile.rpt
+OUTFILE=houtfile.dat.txt
+ERRFILE=herrfile.dat.txt
 
-cobc -x ../cbl/$PGM.cbl -I $SYSLIB -o ../bin/$PGM
+# clean up
+rm ../bin/$PGM
+rm ../spool/$REPORT
+rm ../data/$OUTFILE
+rm ../data/$ERRFILE
+
+cobc -x -o ../bin/$PGM ../cbl/$PGM.cbl -I $SYSLIB 
 
 if [ "$?" -eq 0 ]; then
     ../bin/$PGM

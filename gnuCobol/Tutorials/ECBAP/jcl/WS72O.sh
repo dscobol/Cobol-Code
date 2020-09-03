@@ -1,9 +1,16 @@
 #!/bin/bash
+# static parms
+SYSLIB="../cpy"
 
+# Program parms
 PGM=ws72o
-SYSLIB="$DHOME/dev/cobol/Cobol-Projects/common/cpy"
+REPORT=fav-report2.rpt
 
-cobc -x ../cbl/$PGM.cbl -I $SYSLIB -o ../bin/$PGM
+# clean up
+rm ../bin/$PGM
+rm ../spool/$REPORT
+
+cobc -x -o ../bin/$PGM ../cbl/$PGM.cbl -I $SYSLIB 
 
 if [ "$?" -eq 0 ]; then
     ../bin/$PGM

@@ -6,7 +6,7 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT INVALS
-           ASSIGN TO "../../../common/data/ECBAP/invals.dat.txt"
+           ASSIGN TO "../data/invals.dat.txt"
              ORGANIZATION IS LINE SEQUENTIAL.
        DATA DIVISION.
        FILE SECTION.

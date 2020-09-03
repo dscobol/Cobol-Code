@@ -19,15 +19,11 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT ACCTREC
-      *     ASSIGN TO ACCTREC
-      *     ORGANIZATION IS SEQUENTIAL
-           ASSIGN TO "../../../common/data/ECBAP/acctrec.sort.dat.txt"
+           ASSIGN TO "../data/acctrec.sort.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-ACCTREC-Status.
 
            SELECT RPTFILE
-      *     ASSIGN TO RPTFILE
-      *     ORGANIZATION IS SEQUENTIAL
            ASSIGN TO "../spool/pres-cb1-report.rpt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-Report-Status.

@@ -26,7 +26,7 @@
            SELECT TABLOAD
       *     ASSIGN TO TABLOAD
       *     ORGANIZATION IS SEQUENTIAL
-           ASSIGN TO "../../../common/data/ECBAP/hinstype.dat.txt"
+           ASSIGN TO "../data/hinstype.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-TL-Status.
 

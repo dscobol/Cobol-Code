@@ -19,28 +19,28 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT RFPIN
-           ASSIGN TO "../../../common/data/ECBAP/favrfp.dat.txt"
+           ASSIGN TO "../data/favrfp.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
       *     ASSIGN TO DA-S-RFPIN
       *     ORGANIZATION IS SEQUENTIAL
            FILE STATUS IS WS-RFPIN-Status.
 
            SELECT PROPOSAL
-           ASSIGN TO "../../../common/data/ECBAP/proposal.dat.txt"
+           ASSIGN TO "../data/proposal.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
       *     ASSIGN TO DA-S-PROPOSAL
       *     ORGANIZATION IS SEQUENTIAL
            FILE STATUS IS WS-Proposal-Status.
 
            SELECT BADRFP
-           ASSIGN TO "../../../common/data/ECBAP/badrfp.dat.txt"
+           ASSIGN TO "../data/badrfp.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
       *     ASSIGN TO DA-S-BADRFP
       *     ORGANIZATION IS SEQUENTIAL
            FILE STATUS IS WS-BadRFP-Status.
 
            SELECT PROPRPT
-           ASSIGN TO "../spool/prop-report.rpt"
+           ASSIGN TO "../spool/prope-report.rpt"
            ORGANIZATION IS LINE SEQUENTIAL
       *     ASSIGN TO DA-S-PROPRPT
       *     ORGANIZATION IS SEQUENTIAL
@@ -52,8 +52,7 @@
        FD  RFPIN
            LABEL RECORDS ARE STANDARD
            RECORDING MODE IS F
-           BLOCK CONTAINS 0 RECORDS
-           RECORD CONTAINS 80 CHARACTERS.
+           BLOCK CONTAINS 0 RECORDS.
        01  RFP-Record.
            12 RFP-Artist-Acct-No             PIC X(08).
            12 RFP-Artist-Musical-Genre       PIC X(06).
@@ -77,8 +76,7 @@
        FD  PROPOSAL
            LABEL RECORDS ARE STANDARD
            RECORDING MODE IS F
-           BLOCK CONTAINS 0 RECORDS
-           RECORD CONTAINS 91 CHARACTERS.
+           BLOCK CONTAINS 0 RECORDS.
        01  PRP-Record.
            12 PRP-Artist-Acct-No             PIC X(08).
            12 PRP-Artist-Musical-Genre       PIC X(06).
@@ -103,11 +101,11 @@
            12 PRP-Additional-Costs.
               15 PRP-Shipping-Cost           PIC 9(4)V99.
               15 PRP-Tax                     PIC 9(3)V99.
+
        FD  BADRFP
            LABEL RECORDS ARE STANDARD
            RECORDING MODE IS F
-           BLOCK CONTAINS 0 RECORDS
-           RECORD CONTAINS 80 CHARACTERS.
+           BLOCK CONTAINS 0 RECORDS.
        01  BRFP-Record.
            12 BRFP-Artist-Acct-No             PIC X(08).
            12 BRFP-Artist-Musical-Genre       PIC X(06).
@@ -131,8 +129,7 @@
        FD  PROPRPT
            LABEL RECORDS ARE STANDARD
            RECORDING MODE IS F
-           BLOCK CONTAINS 0 RECORDS
-           RECORD CONTAINS 132 CHARACTERS.
+           BLOCK CONTAINS 0 RECORDS.
        01  Print-Line        PIC X(132).
 
        WORKING-STORAGE SECTION.
@@ -154,7 +151,6 @@
            12 WS-RFPIN-Record-Cnt     PIC 9(4) COMP VALUE ZEROES.
            12 WS-Proposal-Record-Cnt  PIC 9(4) COMP VALUE ZEROES.
            12 WS-BadRFP-Record-Cnt    PIC 9(4) COMP VALUE ZEROES.
-
 
        01  CURRENT-DATE-AND-TIME.
            12 CDT-Year                PIC 9(4).

@@ -19,39 +19,25 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT RFPIN
-           ASSIGN TO "../../../common/data/ECBAP/favrfp.dat.txt"
+           ASSIGN TO "../data/favrfp.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-RFPIN-Status.
-      *     SELECT RFPIN
-      *     ASSIGN TO DA-S-RFPIN
-      *     ORGANIZATION IS SEQUENTIAL
-      *     FILE STATUS IS WS-RFPIN-Status.
 
            SELECT PROPOSAL
-           ASSIGN TO "../../../common/data/ECBAP/proposal.dat.txt"
+           ASSIGN TO "../data/proposal.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS WS-Proposal-Status.
-      *     SELECT PROPOSAL
-      *     ASSIGN TO DA-S-PROPOSAL.
-      *     ORGANIZATION IS SEQUENTIAL
-      *     FILE STATUS IS WS-Proposal-Status.
 
            SELECT PROPRPT
-           ASSIGN TO "../spool/prop-report.rpt"
+           ASSIGN TO "../spool/propc-report.rpt"
            ORGANIZATION IS LINE SEQUENTIAL.
-      *     SELECT PROPRPT
-      *     ASSIGN TO DA-S-PROPRPT.
-      *     ORGANIZATION IS SEQUENTIAL
-      *     FILE STATUS IS WS-Proprpt-Status.
-
 
        DATA DIVISION.
        FILE SECTION.
-       FD  RFPIN.
-      *     LABEL RECORDS ARE STANDARD
-      *     RECORDING MODE IS F
-      *     BLOCK CONTAINS 0 RECORDS
-      *     RECORD CONTAINS 80 CHARACTERS.
+       FD  RFPIN
+           LABEL RECORDS ARE STANDARD
+           RECORDING MODE IS F
+           BLOCK CONTAINS 0 RECORDS.
        01  RFP-Record.
            12 RFP-Artist-Acct-No             PIC X(08).
            12 RFP-Artist-Musical-Genre       PIC X(06).
@@ -72,11 +58,10 @@
               88 RFP-Out-of-Country  VALUE 'OUT'.
            12 FILLER                         PIC X(19).
 
-       FD  PROPOSAL.
-      *     LABEL RECORDS ARE STANDARD
-      *     RECORDING MODE IS F
-      *     BLOCK CONTAINS 0 RECORDS
-      *     RECORD CONTAINS 91 CHARACTERS.
+       FD  PROPOSAL
+           LABEL RECORDS ARE STANDARD
+           RECORDING MODE IS F
+           BLOCK CONTAINS 0 RECORDS.
        01  PRP-Record.
            12 PRP-Artist-Acct-No             PIC X(08).
            12 PRP-Artist-Musical-Genre       PIC X(06).
@@ -102,14 +87,11 @@
               15 PRP-Shipping-Cost           PIC 9(4)V99.
               15 PRP-Tax                     PIC 9(3)V99.
 
-       FD  PROPRPT.
-      *     LABEL RECORDS ARE STANDARD
-      *     RECORDING MODE IS F
-      *     BLOCK CONTAINS 0 RECORDS
-      *     RECORD CONTAINS 132 CHARACTERS.
+       FD  PROPRPT
+           LABEL RECORDS ARE STANDARD
+           RECORDING MODE IS F
+           BLOCK CONTAINS 0 RECORDS.
        01  Print-Line        PIC X(132).
-
-
 
        WORKING-STORAGE SECTION.
        01  WS-FILE-STATUS.

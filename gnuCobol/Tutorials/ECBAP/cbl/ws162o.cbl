@@ -1,7 +1,7 @@
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. HOSPEDIT.
+       PROGRAM-ID. WS162O.
       ***********************************************************
-      * Program name:    HOSPEDIT
+      * Program name:    WS162O
       * Original author: dastagg
       *
       * Description: Program to print Hospital/Insurance Report.
@@ -22,40 +22,29 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT INFILE
-      *     ASSIGN TO HOSPIN
-      *     ORGANIZATION IS SEQUENTIAL
-           ASSIGN TO "../../../common/data/ECBAP/hospin.dat.txt"
+           ASSIGN TO "../data/hospin.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
-             FILE STATUS IS WS-INFile-Status.
+           FILE STATUS IS WS-INFile-Status.
 
            SELECT RPTFILE
-      *     ASSIGN TO RPTFILE
-      *     ORGANIZATION IS SEQUENTIAL
-           ASSIGN TO "../../../common/data/ECBAP/hrptfile.dat.txt"
+           ASSIGN TO "../spool/hrptfileo.rpt"
            ORGANIZATION IS LINE SEQUENTIAL
-             FILE STATUS IS WS-HRpt-Status.
+           FILE STATUS IS WS-HRpt-Status.
 
            SELECT OUTFILE
-      *     ASSIGN TO HOSPOUT
-      *     ORGANIZATION IS SEQUENTIAL
-           ASSIGN TO "../../../common/data/ECBAP/houtfile.dat.txt"
+           ASSIGN TO "../data/houtfileo.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
-             FILE STATUS IS WS-OutFile-Status.
+           FILE STATUS IS WS-OutFile-Status.
 
            SELECT ERRFILE
-      *     ASSIGN TO ERRFILE
-      *     ORGANIZATION IS SEQUENTIAL
-           ASSIGN TO "../../../common/data/ECBAP/herrfile.dat.txt"
+           ASSIGN TO "../data/herrfileo.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
-             FILE STATUS IS WS-ErrFile-Status.
+           FILE STATUS IS WS-ErrFile-Status.
 
            SELECT INSTYPE
-      *     ASSIGN TO INSTYPE
-      *     ORGANIZATION IS SEQUENTIAL
-           ASSIGN TO "../../../common/data/ECBAP/hinstype.dat.txt"
+           ASSIGN TO "../data/hinstype.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL
-             FILE STATUS IS WS-InsType-Status.
-
+           FILE STATUS IS WS-InsType-Status.
 
        DATA DIVISION.
        FILE SECTION.
@@ -246,7 +235,7 @@
 
        01 EOJ-Display-Messages.
            12 EOJ-End-Message PIC X(040) VALUE
-              "*** Program HOSPEDIT - End of Run ***".
+              "*** Program WS162O - End of Run ***".
            12 EOJ-Print-Message PIC X(40) VALUE SPACES.
            12 EOJ-Print-Number  PIC ZZ,ZZ9 VALUE ZEROES.
            12 EOJ-Print-Money   PIC $$,$$9.99 VALUE ZEROES.
