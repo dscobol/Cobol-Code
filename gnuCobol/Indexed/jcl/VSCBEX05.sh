@@ -1,7 +1,12 @@
 #!/bin/bash
+# static parms
+SYSLIB="../cpy"
 
+# Program parms
 PGM=VSCBEX05
-SYSLIB="../../../common/cpy"
+
+# clean up
+rm ../bin/$PGM
 
 cobc -x -o ../bin/$PGM ../cbl/$PGM.cbl -I $SYSLIB 
 

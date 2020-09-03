@@ -29,7 +29,7 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT INFile
-           ASSIGN TO "../data/customer.idat"       
+           ASSIGN TO "../idata/customer.idat"       
            ORGANIZATION IS INDEXED
            RECORD KEY IS INFile-Cust-ID
            ACCESS MODE IS SEQUENTIAL

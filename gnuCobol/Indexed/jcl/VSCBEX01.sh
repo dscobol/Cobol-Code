@@ -1,9 +1,13 @@
 #!/bin/bash
+# static parms
+SYSLIB="../cpy"
 
+# Program parms
 PGM=VSCBEX01
-SYSLIB="../../../common/cpy"
 
-rm ../data/customer.idat
+# clean up
+rm ../bin/$PGM
+rm ../idata/customer.idat
 
 cobc -x -o ../bin/$PGM ../cbl/$PGM.cbl -I $SYSLIB 
 

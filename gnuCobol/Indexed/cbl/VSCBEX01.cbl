@@ -32,12 +32,12 @@
        FILE-CONTROL.
 
            SELECT LOADFile
-           ASSIGN TO "../../data/customer.dat.txt"
+           ASSIGN TO "../data/customer.dat.txt"
            ORGANIZATION IS LINE SEQUENTIAL           
            FILE STATUS IS WS-LOADFile-Status.
 
            SELECT CUSTFile
-           ASSIGN TO "../data/customer.idat"       
+           ASSIGN TO "../idata/customer.idat"       
            ORGANIZATION IS INDEXED
            RECORD KEY IS CUSTFile-Cust-ID
            ACCESS MODE IS SEQUENTIAL
