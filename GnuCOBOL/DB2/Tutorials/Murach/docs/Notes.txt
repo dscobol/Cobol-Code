@@ -1,0 +1,24 @@
+Because there are tables used in this book that
+have the same names as the Sample DB, I decided 
+to create a new Datbase and call it Murach.
+
+IBM Db2 for Linux, UNIX and Windows v11.1.
+
+Created a new Datbase.
+    Opened the DB2 Admin window.
+    Typed "db2" at the prompt.
+    This got me "into the system".
+    at the db2> prompt, typed "CREATE DATABASE murach" and hit Enter.
+    waited a bit of time and it came back with "successfully created database"
+
+Opened PyCharm.
+    Created new database connection for DB2 LUW:
+    Type4
+    localhost, 50000
+    MURACH as the database.
+    Connected.
+
+Ran the "create table" sql for Customers.
+
+In PyCharm, had to go to the Schema tab, select "dastagg" as a viewable
+Schema, then I was able to see the table.
