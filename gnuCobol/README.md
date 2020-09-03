@@ -50,10 +50,10 @@ In all structures:
 - tcbl: temporary COBOL output
 
 For the DB2 directories:
-docs: examples of the files needed to run the programs but are not shared(private)
-p-sqlscripts: public versions of SQL DDL code
-sql: non-public:the sql code to prep and bind the COBOL programs
-SQLScripts: non-public: versions of the SQL DDL code.
+- docs: examples of the files needed to run the programs but are not shared(private)
+- p-sqlscripts: public versions of SQL DDL code
+- sql: non-public:the sql code to prep and bind the COBOL programs
+- SQLScripts: non-public: versions of the SQL DDL code.
 
 AND for DB2 programs, there is a cmd file in jcl to compile and a different one in bin to run it.
 
