@@ -1,0 +1,245 @@
+      **********************************************************
+      * Program name:    CUSTINQ
+      * Original author: David Stagowski
+      *
+      *    Description: Query the Customer table.
+      *
+      *    There are some differences between the GnuCOBOL and 
+      *       ZOS DB2 programs.
+      *
+      *    The biggest difference is the 9800-Connect-to-DB1 paragraph.
+      *
+      *    On ZOS, the JCL makes the connection so there is no need for
+      *       passing the username and password for the database.
+      *
+      *    That is required with GnuCOBOL.
+      *    These GnuCOBOL programs use GETDBID, a very simple called
+      *    module that has the username and password embedded in it.
+      *    When called, it passes them up to the calling program which
+      *    then uses them to make the connection to the server.
+      *
+      * Maintenance Log
+      * Date       Author        Maintenance Requirement
+      * ---------- ------------  --------------------------------
+      * 2020-09-03 dastagg       Created to learn.
+      * 20XX-XX-XX               If you change me, change this.
+      *
+      **********************************************************
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. CUSTINQ.
+
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+      * SOURCE-COMPUTER.   IBM WITH DEBUGGING MODE.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+           EXEC SQL
+               INCLUDE SQLCA
+           END-EXEC.
+
+           EXEC SQL
+           DECLARE CUSTOMERS TABLE 
+           (
+            CUSTNO        CHAR(6) not null,
+           	FNAME         CHAR(20) not null,
+           	LNAME         CHAR(30) not null,
+           	ADDR          CHAR(30) not null,
+           	CITY          CHAR(20) not null,
+           	STATE         CHAR(2) not null,
+           	ZIPCODE       CHAR(10) not null)
+           END-EXEC.           
+           
+      *******************
+      *    This is another BIG difference between GnuCOBOL
+      *    and ZOS. If the Host Variables are not DECLAREd
+      *    in GnuCOBOL, it is an error and it won't bind.
+      *    On ZOS, DECLAREing them is not required and if 
+      *    present, will cause a Warning(RC=04) for the compile.
+
+           EXEC SQL BEGIN DECLARE SECTION END-EXEC.
+       01  HV-Customer-Row.
+           12 HV-Cust-Number          PIC X(06).
+           12 HV-Cust-First-Name      PIC X(20).
+           12 HV-Cust-Last-Name       PIC X(30).
+           12 HV-Cust-Address         PIC X(30).
+           12 HV-Cust-City            PIC X(20).
+           12 HV-Cust-State           PIC X(02).
+           12 HV-Cust-ZipCode         PIC X(10).
+
+      *    This is hardcoded for the MURACH DB.
+      *    You might need to update this for your DB.
+       01  DB-Connection-Info.
+           12 DB-Alias                PIC X(8) VALUE 'MURACH'.
+           12 DB-User-ID              PIC X(10).
+           12 DB-Password.
+              15 DB-Passwd-Length     PIC S9(4) COMP-5  VALUE 0.
+              15 DB-Passwd-Name       PIC X(18).
+           EXEC SQL END DECLARE SECTION END-EXEC.
+      *******************
+
+       01 WS-SQL-STATUS                PIC S9(9) COMP-5.
+          88 SQL-STATUS-OK             VALUE    0.
+          88 SQL-STATUS-NOT-FOUND      VALUE  100.
+          88 SQL-STATUS-DUP            VALUE -803.
+
+       01  WS-Application-Flags.
+           12 WS-Inquiry-Flag          PIC X.
+              88 WS-Keep-Looking       VALUE 'Y'.
+              88 WS-Stop-Looking       VALUE 'N'.
+           12 WS-Find-Customer-Flag    PIC X.
+              88 WS-Customer-Found     VALUE 'Y'.
+              88 WS-Customer-Not-Found VALUE 'N'.
+
+       01  WS-Called-Programs.
+           12 WS-GetDBId               PIC X(8) VALUE SPACES.
+
+       01 EOJ-Display-Messages.
+           12 EOJ-End-Message PIC X(042) VALUE
+              "*** Program CUSTINQ - End of Run Messages".
+
+       PROCEDURE DIVISION.
+       0000-Mainline.
+           PERFORM 1000-Begin-Job.
+           PERFORM 2000-Process.
+           PERFORM 3000-End-Job.
+           GOBACK.
+
+       1000-Begin-Job.
+           PERFORM 9800-Connect-to-DB1.
+           IF SQL-STATUS-OK
+              SET WS-Keep-Looking TO TRUE
+           END-IF.
+
+       2000-Process.
+           PERFORM 2100-Display-Customer
+              UNTIL WS-Stop-Looking.
+
+       2100-Display-Customer.
+           PERFORM 2110-Accept-Customer-Number.
+           IF WS-Keep-Looking
+              PERFORM 2120-Get-Customer-Row
+              IF WS-Customer-Found
+                 PERFORM 2130-Display-Customer-Lines
+              ELSE
+                 PERFORM 2140-Display-Error-Lines
+              END-IF
+           END-IF.
+
+       2110-Accept-Customer-Number.
+           DISPLAY '-------------Customer Inquiry--------------------'.
+           DISPLAY '-------------------------------------------------'.
+           DISPLAY 'Key in the next Customer Number and press Enter,'.
+           DISPLAY 'or key in 999999 and press Enter to quit.'.
+           ACCEPT HV-Cust-Number.
+           IF HV-Cust-Number = '999999'
+              SET WS-Stop-Looking TO TRUE
+           END-IF.
+
+       2120-Get-Customer-Row.
+           PERFORM 5000-Read-DB1.
+
+       2130-Display-Customer-Lines.
+           DISPLAY '-------------Customer Inquiry--------------------'.
+           DISPLAY '-------------------------------------------------'.
+           DISPLAY ' Customer: ' 
+              HV-Cust-Number.
+           DISPLAY '     Name: ' 
+              FUNCTION TRIM(HV-Cust-First-Name), SPACE, 
+              FUNCTION TRIM(HV-Cust-Last-Name).          
+           DISPLAY '  Address: ' 
+              FUNCTION TRIM(HV-Cust-Address).
+           DISPLAY '           ' 
+              FUNCTION TRIM(HV-Cust-City), SPACE,
+              HV-Cust-State, SPACE, HV-Cust-ZipCode.
+           DISPLAY '-------------------------------------------------'.
+
+       2140-Display-Error-Lines.
+           DISPLAY '-------------Customer Inquiry--------------------'.
+           DISPLAY '-------------------------------------------------'.
+           DISPLAY ' Customer: ' HV-Cust-Number ' was not found.'.
+
+       3000-End-Job.
+           EXEC SQL CONNECT RESET END-EXEC.
+           MOVE SQLCODE TO WS-SQL-STATUS.
+
+       5000-Read-DB1.
+           EXEC SQL
+              SELECT CUSTNO, FNAME, LNAME,
+                     ADDR, CITY, STATE,
+                     ZIPCODE
+              INTO
+                 :HV-Cust-Number,
+                 :HV-Cust-First-Name,
+                 :HV-Cust-Last-Name,
+                 :HV-Cust-Address,
+                 :HV-Cust-City,
+                 :HV-Cust-State,
+                 :HV-Cust-ZipCode
+              FROM CUSTOMERS
+                 WHERE CUSTNO = :HV-Cust-Number
+           END-EXEC.
+           MOVE SQLCODE TO WS-SQL-STATUS.
+           IF SQL-STATUS-OK
+              SET WS-Customer-Found TO TRUE
+           ELSE
+              IF SQL-STATUS-NOT-FOUND
+                 SET WS-Customer-Not-Found TO TRUE
+              ELSE
+                 DISPLAY "*** WARNING ***"
+                 DISPLAY "There was a problem Fetching the cursor."
+                 DISPLAY "SQLCODE = " SQLCODE
+                 PERFORM 3000-End-Job
+                 MOVE 8 TO RETURN-CODE
+                 GOBACK 
+              END-IF
+           END-IF.
+
+       9800-Connect-to-DB1.
+           PERFORM 9810-Setup-DB1-Connection.
+           IF SQL-STATUS-OK
+              CONTINUE
+           ELSE
+              DISPLAY "*** The DB connection is not valid!***"
+              DISPLAY "Exiting the program.!"
+              GOBACK
+           END-IF.
+
+       9810-Setup-DB1-Connection.
+           PERFORM 9811-Get-Credentials.
+           PERFORM 9812-Create-Connection-To-DB1.
+
+       9811-Get-Credentials.
+           MOVE 'GETDBID' TO WS-GetDBId
+           CALL WS-GetDBId USING DB-User-ID, DB-Passwd-Name.
+      * Passwords in a CONNECT statement must be entered in a VARCHAR
+      * format with the length of the input string.
+           INSPECT DB-Passwd-Name
+              TALLYING DB-Passwd-Length
+              FOR CHARACTERS BEFORE INITIAL " ".
+
+       9812-Create-Connection-To-DB1.
+           PERFORM 9814-Connect-To-DB1
+           IF SQL-STATUS-OK
+              PERFORM 9816-Create-Cursor-DB1
+              IF SQL-STATUS-OK
+                 PERFORM 9818-Open-Cursor-DB1
+              END-IF
+           END-IF.
+
+       9814-Connect-To-DB1.
+           EXEC SQL CONNECT TO :DB-Alias
+                USER :DB-User-ID
+                USING :DB-Passwd-Name
+              END-EXEC.
+           MOVE SQLCODE TO WS-SQL-STATUS.
+
+       9816-Create-Cursor-DB1.
+      *    Parms for DB1-C1
+      *D     DISPLAY "Nothing to do here.".
+      *    As an example:
+      *     MOVE "DESIGNER" TO HV-Job-Title.
+
+       9818-Open-Cursor-DB1.
+      *    This would be where you open a cursor.
+      *    Not needed for this program.
