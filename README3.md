@@ -23,6 +23,26 @@ Status of Programs:
 | BDS1103 | Listing11-3 - 2-Dimensional Table         |          |       |
 | BDS1104 | Listing11-4 - 3 Control Breaks            |          |       |
 
+['DB2 for the COBOL Programmer - Part 1' by Curtis Garvin and Steve Eckols](https://www.murach.com/shop/db2-for-the-cobol-programmer-2c-part-1-detail) :
+
+**Note**: These will only be run using GnuCOBOL and IBM DB2 for Linux, UNIX and Windows.
+
+| Program | Description                                    | GnuCOBOL |
+| :------ | :--------------------------------------------- | :------: |
+|         |                                                |          |
+| CUSTINQ   | A COBOL program that introduces embedded SQL.|    X     |
+| SALESINQ | A COBOL program that processes DB2 data with cursors. |          |
+| UPDTCUST | A COBOL program that maintains a DB2 table using the UPDATE, DELETE, and INSERT SQL statements.|          |
+| UPDTROLL | An enhanced COBOL program that uses the COMMIT and ROLLBACK SQL statements.|          |
+| INVREG | A COBOL program that uses an inner join to produce a report, or register, that lists all the invoices in an invoice table.|    X     |
+| NAMEINQ | An interactive COBOL program that displays customer information for each customer.|          |
+| SUMINQ | A COBOL program that uses column functions.|          |
+| STRLEN | A COBOL subprogram that determines the length of a character string|          |
+| VNCUPDT | A COBOL program that updates a table that has variable-length data and nulls.|          |
+| UPDTHST1 | A maintenance COBOL program that moves data from three active tables to three history tables.|          |
+| UPDTHST2 | An enhanced COBOL program that uses referential integrity to maintain DB2 tables.|          |
+| UPDTHST3 | A COBOL	program that uses enhanced error processing. |          |
+
 
 [The Open Mainframe Project](https://www.openmainframeproject.org/projects/coboltrainingcourse) :
 
