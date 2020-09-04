@@ -48,19 +48,21 @@ In all structures:
 - jcl: the scripts used to compile and run
 - spool: the printed output
 - tcbl: temporary COBOL output
+  
+For the Indexed directory:
+- idata: not public: indexed datafiles 
 
 For the DB2 directories:
-- docs: examples of the files needed to run the programs but are not shared(private)
-- p-sqlscripts: public versions of SQL DDL code
-- sql: non-public:the sql code to prep and bind the COBOL programs
-- SQLScripts: non-public: versions of the SQL DDL code.
+- docs: examples of the files needed to run the programs but are not public
+- p-sqlscripts: public: versions of SQL DDL code
+- sql: not public: the sql code to prep and bind the COBOL programs
+- SQLScripts: not public: versions of the SQL DDL code.
 
 AND for DB2 programs, there is a cmd file in jcl to compile and a different one in bin to run it.
 
 ### Why don't I see them?
 Only the following directories are pushed to GitHub:
-cpy, cbl, data, docs, p-sqlscripts and jcl.
 
-The others are not because they are either binary, temporary or they contain usernames and passwords.
+cbl, cpy, data, docs, jcl, and p-sqlscripts.
 
-For the Indexed programs, there is a special idata directory just for the indexed datafiles, this is also not pushed. It's binary.
+The others are not public because they are either binary, temporary or they contain usernames and passwords. For examples of some of these, look in the docs directory.
