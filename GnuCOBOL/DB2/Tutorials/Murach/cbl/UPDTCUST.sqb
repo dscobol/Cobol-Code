@@ -32,7 +32,7 @@
 
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
-       SOURCE-COMPUTER.   IBM WITH DEBUGGING MODE.
+      * SOURCE-COMPUTER.   IBM WITH DEBUGGING MODE.
 
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
@@ -69,6 +69,9 @@
        01  WS-File-Counters.
            12 FD-CUSTFile-Record-Cnt         PIC S9(4) COMP VALUE ZERO.
            12 FD-ERRFile-Record-Cnt          PIC S9(4) COMP VALUE ZERO.
+           12 DB-Insert-Record-Cnt           PIC S9(4) COMP VALUE ZERO.
+           12 DB-Update-Record-Cnt           PIC S9(4) COMP VALUE ZERO.
+           12 DB-Delete-Record-Cnt           PIC S9(4) COMP VALUE ZERO.
            12 WS-Display-Counters            PIC ZZZ9.
 
            EXEC SQL
@@ -192,6 +195,12 @@
            DISPLAY "      Records Read: " WS-Display-Counters.
            MOVE FD-ERRFile-Record-Cnt TO WS-Display-Counters.
            DISPLAY "Error Recs Written: " WS-Display-Counters.
+           MOVE DB-Insert-Record-Cnt TO WS-Display-Counters.
+           DISPLAY "  Records Inserted: " WS-Display-Counters.
+           MOVE DB-Update-Record-Cnt TO WS-Display-Counters.
+           DISPLAY "   Records Updated: " WS-Display-Counters.
+           MOVE DB-Delete-Record-Cnt TO WS-Display-Counters.
+           DISPLAY "   Records Deleted: " WS-Display-Counters.
 
        5000-Read-CUSTFile.
            READ CUSTFile
@@ -243,7 +252,7 @@
            MOVE SQLCODE TO WS-SQL-STATUS.
            EVALUATE TRUE
               WHEN SQL-STATUS-OK
-                 CONTINUE
+                 ADD +1 TO DB-Insert-Record-Cnt
               WHEN OTHER
                  DISPLAY "*** WARNING ***"
                  DISPLAY "There was a problem Inserting the record."
@@ -269,7 +278,7 @@
            MOVE SQLCODE TO WS-SQL-STATUS.
            EVALUATE TRUE
               WHEN SQL-STATUS-OK
-                 CONTINUE 
+                 ADD +1 TO DB-Update-Record-Cnt
               WHEN OTHER
                  DISPLAY "*** WARNING ***"
                  DISPLAY "There was a problem Updating the record."
@@ -288,7 +297,7 @@
            MOVE SQLCODE TO WS-SQL-STATUS.
            EVALUATE TRUE
               WHEN SQL-STATUS-OK
-                 CONTINUE 
+                 ADD +1 TO DB-Delete-Record-Cnt
               WHEN OTHER
                  DISPLAY "*** WARNING ***"
                  DISPLAY "There was a problem Deleting the record."
