@@ -1,0 +1,329 @@
+      **********************************************************
+      * Program name:    UPDTCUST
+      * Original author: David Stagowski
+      *
+      *    Description: A COBOL program that maintains a DB2 table 
+      *    using the UPDATE, DELETE, and INSERT SQL statements.
+      *    
+      *
+      *    There are some differences between the GnuCOBOL and 
+      *       ZOS DB2 programs.
+      *
+      *    The biggest difference is the 9800-Connect-to-DB1 paragraph.
+      *
+      *    On ZOS, the JCL makes the connection so there is no need for
+      *       passing the username and password for the database.
+      *
+      *    That is required with GnuCOBOL.
+      *    These GnuCOBOL programs use GETDBID, a very simple called
+      *    module that has the username and password embedded in it.
+      *    When called, it passes them up to the calling program which
+      *    then uses them to make the connection to the server.
+      *
+      * Maintenance Log
+      * Date       Author        Maintenance Requirement
+      * ---------- ------------  --------------------------------
+      * 2020-09-05 dastagg       Created to learn.
+      * 20XX-XX-XX               If you change me, change this.
+      *
+      **********************************************************
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. UPDTCUST.
+
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SOURCE-COMPUTER.   IBM WITH DEBUGGING MODE.
+
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT CUSTFile
+           ASSIGN TO "../idata/customrs.idat"       
+           ORGANIZATION IS INDEXED
+           RECORD KEY IS CUSTFile-Cust-Number
+           ACCESS MODE IS SEQUENTIAL
+           FILE STATUS IS WS-CUSTFile-Status.
+
+           SELECT ERRFile
+           ASSIGN TO "../idata/errcustmrs.idat"       
+           ORGANIZATION IS INDEXED
+           RECORD KEY IS ERRFile-Cust-Number
+           ACCESS MODE IS SEQUENTIAL
+           FILE STATUS IS WS-ERRFile-Status.
+
+       DATA DIVISION.
+       FILE SECTION.
+
+       FD  CUSTFile.
+       01  FD-CUSTFile-Customer-Record.
+           COPY CUSTOMRS REPLACING ==:tag:== BY ==CUSTFile==.
+
+       FD  ERRFile.
+       01  FD-ERRFile-Customer-Record.
+           COPY CUSTOMRS REPLACING ==:tag:== BY ==ERRFile==.
+
+       WORKING-STORAGE SECTION.
+       01  WS-FILE-STATUS.
+           COPY WSFST REPLACING ==:tag:== BY ==CUSTFile==.
+           COPY WSFST REPLACING ==:tag:== BY ==ERRFile==.
+
+       01  WS-File-Counters.
+           12 FD-CUSTFile-Record-Cnt         PIC S9(4) COMP VALUE ZERO.
+           12 FD-ERRFile-Record-Cnt          PIC S9(4) COMP VALUE ZERO.
+           12 WS-Display-Counters            PIC ZZZ9.
+
+           EXEC SQL
+               INCLUDE SQLCA
+           END-EXEC.
+
+           EXEC SQL
+           DECLARE CUSTOMERS TABLE 
+           (
+            CUSTNO        CHAR(6) not null,
+           	FNAME         CHAR(20) not null,
+           	LNAME         CHAR(30) not null,
+           	ADDR          CHAR(30) not null,
+           	CITY          CHAR(20) not null,
+           	STATE         CHAR(2) not null,
+           	ZIPCODE       CHAR(10) not null)
+           END-EXEC.           
+           
+      *******************
+      *    This is another BIG difference between GnuCOBOL
+      *    and ZOS. If the Host Variables are not DECLAREd
+      *    in GnuCOBOL, it is an error and it won't bind.
+      *    On ZOS, DECLAREing them is not required and if 
+      *    present, will cause a Warning(RC=04) for the compile.
+
+           EXEC SQL BEGIN DECLARE SECTION END-EXEC.
+       01  HV-Customer-Row.
+           12 HV-Cust-Number          PIC X(06).
+           12 HV-Cust-First-Name      PIC X(20).
+           12 HV-Cust-Last-Name       PIC X(30).
+           12 HV-Cust-Address         PIC X(30).
+           12 HV-Cust-City            PIC X(20).
+           12 HV-Cust-State           PIC X(02).
+           12 HV-Cust-ZipCode         PIC X(10).
+
+      *    This is hardcoded for the MURACH DB.
+      *    You might need to update this for your DB.
+       01  DB-Connection-Info.
+           12 DB-Alias                PIC X(8) VALUE 'MURACH'.
+           12 DB-User-ID              PIC X(10).
+           12 DB-Password.
+              15 DB-Passwd-Length     PIC S9(4) COMP-5  VALUE 0.
+              15 DB-Passwd-Name       PIC X(18).
+           EXEC SQL END DECLARE SECTION END-EXEC.
+      *******************
+
+       01 WS-SQL-STATUS                PIC S9(9) COMP-5.
+          88 SQL-STATUS-OK             VALUE    0.
+          88 SQL-STATUS-NOT-FOUND      VALUE  100.
+          88 SQL-STATUS-DUP            VALUE -803.
+
+       01  WS-Called-Programs.
+           12 WS-GetDBId               PIC X(8) VALUE SPACES.
+
+       01 EOJ-Display-Messages.
+           12 EOJ-End-Message PIC X(042) VALUE
+              "*** Program UPDTCUST - End of Run Messages".
+
+       PROCEDURE DIVISION.
+       0000-Mainline.
+           PERFORM 1000-Begin-Job.
+           PERFORM 2000-Process.
+           PERFORM 3000-End-Job.
+           GOBACK.
+
+       1000-Begin-Job.
+           PERFORM 9800-Connect-to-DB1.
+           IF SQL-STATUS-OK
+              OPEN INPUT  CUSTFile
+              OPEN OUTPUT ERRFile
+              PERFORM 5000-Read-CUSTFile
+           END-IF.
+
+       2000-Process.
+           PERFORM 2100-Update-Customer
+              UNTIL WS-CUSTFile-EOF.
+
+       2100-Update-Customer.
+      D    DISPLAY "CustFile" FD-Custfile-Customer-Record.
+           IF WS-CUSTFile-Good 
+              EVALUATE CUSTFile-Cust-Trans-Code
+                 WHEN 'A'
+                    PERFORM 2110-Insert-Customer-Row
+                 WHEN 'U'
+                    PERFORM 2120-Update-Customer-Row
+                 WHEN 'D'
+                    PERFORM 2130-Delete-Customer-Row
+                 WHEN OTHER 
+                    PERFORM 2140-Write-Error-Record
+              END-EVALUATE
+           END-IF.
+           PERFORM 5000-Read-CUSTFile.
+
+       2110-Insert-Customer-Row.
+           MOVE CUSTFile-Customer-Record TO
+              HV-Customer-Row.
+           PERFORM 6000-Insert-DB1.
+
+       2120-Update-Customer-Row.
+           MOVE CUSTFile-Customer-Record TO
+              HV-Customer-Row.
+           PERFORM 6100-Update-DB1.
+
+       2130-Delete-Customer-Row.
+           MOVE CUSTFile-Customer-Record TO
+              HV-Customer-Row.
+           PERFORM 6200-Delete-DB1.
+
+       2140-Write-Error-Record.
+           MOVE FD-CUSTFile-Customer-Record TO 
+                FD-ERRFile-Customer-Record.
+           PERFORM 6000-Write-ERRFile.
+
+       3000-End-Job.
+           EXEC SQL CONNECT RESET END-EXEC.
+           MOVE SQLCODE TO WS-SQL-STATUS.
+           CLOSE CUSTFile
+                 ERRFILE.
+           DISPLAY EOJ-End-Message.
+           MOVE FD-CUSTFile-Record-Cnt TO WS-Display-Counters.
+           DISPLAY "      Records Read: " WS-Display-Counters.
+           MOVE FD-ERRFile-Record-Cnt TO WS-Display-Counters.
+           DISPLAY "Error Recs Written: " WS-Display-Counters.
+
+       5000-Read-CUSTFile.
+           READ CUSTFile
+              AT END SET WS-CUSTFile-EOF TO TRUE
+           END-READ.
+           EVALUATE TRUE
+              WHEN WS-CUSTFile-Good
+                 ADD +1 TO FD-CUSTFile-Record-Cnt
+              WHEN WS-CUSTFile-EOF
+                 CONTINUE
+              WHEN OTHER
+                 DISPLAY "** ERROR **: 5000-Read-CUSTFile"
+                 DISPLAY "Read CUSTFile Failed."
+                 DISPLAY "File Status: " WS-CUSTFile-Status
+                 PERFORM 3000-End-Job
+                 MOVE 8 TO RETURN-CODE
+                 GOBACK 
+           END-EVALUATE.
+
+       6000-Write-ERRFile.
+           WRITE FD-ERRFile-Customer-Record.
+           EVALUATE TRUE
+              WHEN WS-ERRFile-Good
+                 ADD +1 TO FD-ERRFile-Record-Cnt
+              WHEN OTHER
+                 DISPLAY "** ERROR **: 6000-Write-ERRFile"
+                 DISPLAY "Write ERRFile Failed."
+                 DISPLAY "File Status: " WS-ERRFile-Status
+                 PERFORM 3000-End-Job
+                 MOVE 8 TO RETURN-CODE
+                 GOBACK 
+           END-EVALUATE.
+
+       6000-Insert-DB1.
+           EXEC SQL
+              INSERT INTO CUSTOMERS
+               (CUSTNO, FNAME, LNAME,
+                ADDR, CITY, STATE,
+                ZIPCODE)
+              VALUES
+                (:HV-Cust-Number,
+                 :HV-Cust-First-Name,
+                 :HV-Cust-Last-Name,
+                 :HV-Cust-Address,
+                 :HV-Cust-City,
+                 :HV-Cust-State,
+                 :HV-Cust-ZipCode)
+           END-EXEC.
+           MOVE SQLCODE TO WS-SQL-STATUS.
+           EVALUATE TRUE
+              WHEN SQL-STATUS-OK
+                 CONTINUE
+              WHEN OTHER
+                 DISPLAY "*** WARNING ***"
+                 DISPLAY "There was a problem Inserting the record."
+                 DISPLAY "SQLCODE = " SQLCODE
+                 PERFORM 3000-End-Job
+                 MOVE 8 TO RETURN-CODE
+                 GOBACK 
+           END-EVALUATE.
+
+       6100-Update-DB1.
+           EXEC SQL
+              UPDATE CUSTOMERS
+              SET 
+               FNAME   = :HV-Cust-First-Name,
+               LNAME   = :HV-Cust-Last-Name,
+               ADDR    = :HV-Cust-Address,
+               CITY    = :HV-Cust-City,
+               STATE   = :HV-Cust-State,
+               ZIPCODE = :HV-Cust-ZipCode
+              WHERE
+                CUSTNO = :HV-Cust-Number
+           END-EXEC.
+           MOVE SQLCODE TO WS-SQL-STATUS.
+           EVALUATE TRUE
+              WHEN SQL-STATUS-OK
+                 CONTINUE 
+              WHEN OTHER
+                 DISPLAY "*** WARNING ***"
+                 DISPLAY "There was a problem Updating the record."
+                 DISPLAY "SQLCODE = " SQLCODE
+                 PERFORM 3000-End-Job
+                 MOVE 8 TO RETURN-CODE
+                 GOBACK 
+           END-EVALUATE.
+
+       6200-Delete-DB1.
+           EXEC SQL
+              DELETE FROM CUSTOMERS
+              WHERE
+                CUSTNO = :HV-Cust-Number
+           END-EXEC.
+           MOVE SQLCODE TO WS-SQL-STATUS.
+           EVALUATE TRUE
+              WHEN SQL-STATUS-OK
+                 CONTINUE 
+              WHEN OTHER
+                 DISPLAY "*** WARNING ***"
+                 DISPLAY "There was a problem Deleting the record."
+                 DISPLAY "SQLCODE = " SQLCODE
+                 PERFORM 3000-End-Job
+                 MOVE 8 TO RETURN-CODE
+                 GOBACK 
+           END-EVALUATE.
+
+       9800-Connect-to-DB1.
+           PERFORM 9810-Setup-DB1-Connection.
+           IF SQL-STATUS-OK
+              CONTINUE
+           ELSE
+              DISPLAY "*** The DB connection is not valid!***"
+              DISPLAY "Exiting the program.!"
+              GOBACK
+           END-IF.
+
+       9810-Setup-DB1-Connection.
+           PERFORM 9811-Get-Credentials.
+           PERFORM 9814-Connect-To-DB1.
+
+       9811-Get-Credentials.
+           MOVE 'GETDBID' TO WS-GetDBId
+           CALL WS-GetDBId USING DB-User-ID, DB-Passwd-Name.
+      * Passwords in a CONNECT statement must be entered in a VARCHAR
+      * format with the length of the input string.
+           INSPECT DB-Passwd-Name
+              TALLYING DB-Passwd-Length
+              FOR CHARACTERS BEFORE INITIAL " ".
+
+       9814-Connect-To-DB1.
+           EXEC SQL CONNECT TO :DB-Alias
+                USER :DB-User-ID
+                USING :DB-Passwd-Name
+              END-EXEC.
+           MOVE SQLCODE TO WS-SQL-STATUS.

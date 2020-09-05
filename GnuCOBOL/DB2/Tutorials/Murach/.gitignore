@@ -1,5 +1,6 @@
 /bin/*
 /cbl/*.bnd
+/idata/*
 /spool/*
 /sql/*
 /SQLScripts/*
