@@ -18,5 +18,6 @@ What I needed to do to get them to work was uninstall LUW ver 11.5, install LUW 
 
 After adjusting the cmd files to my environment, I was then able to run COBOL/DB2 programs.
 
-One more note.
+One more note:
+
 It might be because the way I installed LUW(using a local account with Admin rights) but it automatically added my local userid and password to the DB as DBAdmin. So I am able to run the cmd files from a normal Windows Terminal.
