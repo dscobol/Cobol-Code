@@ -2,7 +2,8 @@
       * Program name:    SALESINQ
       * Original author: David Stagowski
       *
-      *    Description: Query the Customer table.
+      *    Description: A COBOL program that processes DB2 data
+      *    with a cursor.
       *
       *    There are some differences between the GnuCOBOL and 
       *       ZOS DB2 programs.
@@ -21,7 +22,7 @@
       * Maintenance Log
       * Date       Author        Maintenance Requirement
       * ---------- ------------  --------------------------------
-      * 2020-09-03 dastagg       Created to learn.
+      * 2020-09-05 dastagg       Created to learn.
       * 20XX-XX-XX               If you change me, change this.
       *
       **********************************************************
