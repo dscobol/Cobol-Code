@@ -33,7 +33,7 @@ Status of Programs:
 | CUSTINQ   | A COBOL program that introduces embedded SQL.|    X     |
 | SALESINQ | A COBOL program that processes DB2 data with cursors. |    X     |
 | UPDTCUST | A COBOL program that maintains a DB2 table using the UPDATE, DELETE, and INSERT SQL statements.|    X     |
-| UPDTROLL | An enhanced COBOL program that uses the COMMIT and ROLLBACK SQL statements.|          |
+| UPDTROLL | An enhanced COBOL program that uses the COMMIT and ROLLBACK SQL statements.|    X     |
 | INVREG | A COBOL program that uses an inner join to produce a report, or register, that lists all the invoices in an invoice table.|    X     |
 | NAMEINQ | An interactive COBOL program that displays customer information for each customer.|          |
 | SUMINQ | A COBOL program that uses column functions.|          |
