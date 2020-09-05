@@ -25,4 +25,6 @@ And was connected to the Murach DB.
 
 Ran the "create table" sql for CUSTOMERS.
 
+There is a copy of the sql code used to create the CUSTOMERS table in p-sqlscripts.
+
 In PyCharm, had to go to the Schemas tab of the datasource Properties, check the checkbox next to  "DASTAGG" to select it as a viewable Schema, then I was able to see the table.
