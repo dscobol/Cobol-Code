@@ -250,12 +250,13 @@
            IF Policy-Deductible-Paid > WS-Claim-Deductible-Amt
               MOVE ZEROES TO WS-Claim-Deductible-Amt
            ELSE
-              IF Policy-Deductible-Paid > ZEROES
-                 SUBTRACT Policy-Deductible-Paid  FROM
-                    WS-Claim-Deductible-Amt       GIVING
-                    WS-Claim-Deductible-Amt
-                 END-SUBTRACT
-              END-IF
+              EVALUATE TRUE
+                 WHEN Policy-Deductible-Paid > ZEROES
+                    SUBTRACT Policy-Deductible-Paid  FROM
+                       WS-Claim-Deductible-Amt       GIVING
+                       WS-Claim-Deductible-Amt
+                    END-SUBTRACT
+              END-EVALUATE
            END-IF.
 
            COMPUTE WS-Claim-CoPay-Amt ROUNDED =
@@ -274,11 +275,12 @@
               DISPLAY "Policy Number: " Insured-Policy-No
               DISPLAY SPACES
            ELSE
-             IF WS-Claim-Deductible-Amt > ZEROES
-                Move "N" TO R1-Policy-Deductible-Met
-             ELSE
-                Move "Y" TO R1-Policy-Deductible-Met
-             END-IF
+              EVALUATE TRUE
+                 WHEN WS-Claim-Deductible-Amt > ZEROES
+                    Move "N" TO R1-Policy-Deductible-Met
+                 WHEN WS-Claim-Deductible-Amt = ZERO
+                   Move "Y" TO R1-Policy-Deductible-Met
+             END-EVALUATE
              MOVE WS-Claim-Deductible-Amt TO R1-Deductible-Amount
              MOVE WS-Claim-CoPay-Amt TO R1-Policy-Copay-Amount
              MOVE WS-Claim-Paid-Amt TO R1-Claim-Amount-Paid
@@ -314,18 +316,17 @@
            READ INSCLAIM
               AT END SET WS-INSClaim-EOF TO TRUE
            END-READ.
-           IF WS-INSClaim-Good
-              ADD 1 TO WS-INSClaim-Record-Cnt
-           ELSE
-              IF WS-INSClaim-EOF
-                 NEXT SENTENCE
-              ELSE
+           EVALUATE TRUE
+              WHEN WS-INSClaim-Good
+                 ADD 1 TO WS-INSClaim-Record-Cnt
+              WHEN WS-INSClaim-EOF
+                 CONTINUE
+              WHEN OTHER
                  DISPLAY "** ERROR **: 5100-Read-INSClaim"
                  DISPLAY "Read INSCLAIM Failed."
                  DISPLAY "File Status: " WS-INSClaim-Status
                  GOBACK
-              END-IF
-           END-IF.
+           END-EVALUATE.
 
        6100-Write-R1.
            IF R1-Line-Count + R1-Line-Advance > R1-Max-Lines
