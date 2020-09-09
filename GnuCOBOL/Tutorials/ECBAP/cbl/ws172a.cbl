@@ -235,20 +235,21 @@
                  MOVE WS-Course-Grade
                     (WS-Student-Sub, WS-Courses-Sub) TO
                     R1-Grade
-                 IF WS-Valid-Grade
-                    (WS-Student-Sub, WS-Courses-Sub)
-                    MOVE SPACES TO R1-Grade-Valid
-                    PERFORM 2120-Calculate-Grades
-                 ELSE
-                    MOVE "*" TO R1-Grade-Valid
-                    DISPLAY "There was an incorrect grade assigned."
-                    DISPLAY "Please check the report for the *."
-                    DISPLAY "And the ERRFILE for the actual record."
-                    MOVE "INVALID GRADE" TO FD-ERRFILE-Record
-                    PERFORM 6200-Write-ERRFILE
-                    MOVE FD-Student-Record TO FD-ERRFILE-Record
-                    PERFORM 6200-Write-ERRFILE
-                 END-IF
+                 EVALUATE TRUE
+                    WHEN WS-Valid-Grade
+                       (WS-Student-Sub, WS-Courses-Sub)
+                       MOVE SPACES TO R1-Grade-Valid
+                       PERFORM 2120-Calculate-Grades
+                    WHEN OTHER
+                       MOVE "*" TO R1-Grade-Valid
+                       DISPLAY "There was an incorrect grade assigned."
+                       DISPLAY "Please check the report for the *."
+                       DISPLAY "And the ERRFILE for the actual record."
+                       MOVE "INVALID GRADE" TO FD-ERRFILE-Record
+                       PERFORM 6200-Write-ERRFILE
+                       MOVE FD-Student-Record TO FD-ERRFILE-Record
+                       PERFORM 6200-Write-ERRFILE
+                 END-EVALUATE
                  MOVE R1-Detail-Line2 TO R1-Print-Line
                  PERFORM 6100-Write-R1
                ELSE
@@ -325,19 +326,17 @@
            READ STCOURS
               AT END SET WS-STCOURS-EOF TO TRUE
            END-READ.
-           IF WS-STCOURS-Good
-              ADD +1 TO FD-STCOURS-Record-Cnt
-           ELSE
-              IF WS-STCOURS-EOF
-                 NEXT SENTENCE
-              ELSE
+           EVALUATE TRUE
+              WHEN WS-STCOURS-Good
+                 ADD +1 TO FD-STCOURS-Record-Cnt
+              WHEN WS-STCOURS-EOF
+                 CONTINUE
+              WHEN OTHER
                  DISPLAY "** ERROR **: 5000-Read-STCOURS"
                  DISPLAY "Read STCOURS Failed."
                  DISPLAY "File Status: " WS-STCOURS-Status
                  GOBACK
-              END-IF
-           END-IF.
-
+           END-EVALUATE.
 
        6100-Write-R1.
            IF R1-Line-Count + R1-Line-Advance > R1-Max-Lines
