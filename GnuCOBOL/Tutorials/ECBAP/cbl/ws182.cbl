@@ -157,7 +157,7 @@
            12 FILLER                   PIC X(002) VALUE SPACE.
            12 R1-CB-State              PIC X(017).
            12 FILLER                   PIC X(005) VALUE SPACES.
-           12 FILLER                   PIC X(019) 
+           12 FILLER                   PIC X(019)
                VALUE "Salary | Net Worth:".
            12 FILLER                   PIC X(010) VALUE SPACES.
            12 R1-CB-Total-Salary       PIC $$$,$$$,$$9.99.
@@ -217,25 +217,26 @@
            PERFORM 6101-Setup-R1.
            PERFORM 6110-Write-R1-Page-Header.
            PERFORM 2120-Setup-CB-Fields.
-       
-       
+
+
        2000-Process.
 
            PERFORM UNTIL WS-ACCTREC-EOF
               IF WS-ACCTREC-Good
-                 IF FD-State NOT = WS-CB-State
-                    PERFORM 2100-Main-Break
-                    PERFORM 2900-Detail-Line
-                 ELSE
-                    PERFORM 2900-Detail-Line 
-                 END-IF
+                 EVALUATE TRUE
+                    WHEN FD-State NOT = WS-CB-State
+                       PERFORM 2100-Main-Break
+                       PERFORM 2900-Detail-Line
+                    WHEN FD-State = WS-CB-State
+                       PERFORM 2900-Detail-Line
+                 END-EVALUATE
                  PERFORM 5000-Read-ACCTREC
               END-IF
            END-PERFORM.
 
            PERFORM 2110-Print-Main-Footer.
-                 
-           
+
+
        2100-Main-Break.
            PERFORM 2110-Print-Main-Footer.
            PERFORM 2120-Setup-CB-Fields.
@@ -254,8 +255,8 @@
            INITIALIZE WS-CB-Total-Salary
                       WS-CB-Total-Net-Worth.
 
-       2900-Detail-Line. 
-           
+       2900-Detail-Line.
+
            PERFORM 2910-Print-Detail-Line.
 
        2910-Print-Detail-Line.
@@ -263,36 +264,36 @@
            MOVE SPACES TO R1-Name-Combined.
            STRING FD-First-Name, " ",
                   FD-Last-Name
-              DELIMITED BY "  " 
+              DELIMITED BY "  "
               INTO R1-Name-Combined.
            MOVE FD-Year-Term-Start TO R1-Year-Term-Start.
            MOVE FD-Year-Term-End TO R1-Year-Term-End.
 
            MOVE FD-Salary TO R1-Salary.
-           ADD FD-Salary TO 
+           ADD FD-Salary TO
               WS-CB-Total-Salary, WS-Total-Salary
            END-ADD.
 
            MOVE FD-Net-Worth TO R1-Net-Worth.
-           ADD FD-Net-Worth TO 
+           ADD FD-Net-Worth TO
               WS-CB-Total-Net-Worth , WS-Total-Net-Worth
            END-ADD.
 
-           COMPUTE R1-Salary-Accum ROUNDED = 
+           COMPUTE R1-Salary-Accum ROUNDED =
               FD-Salary * (FD-Year-Term-End - FD-Year-Term-Start)
-           
+
            IF FD-Salary < WS-Low-Salary
               MOVE FD-Salary TO WS-Low-Salary
-              MOVE R1-Name-Combined TO WS-Low-Salary-Name 
+              MOVE R1-Name-Combined TO WS-Low-Salary-Name
            END-IF.
            IF FD-Salary > WS-High-Salary
               MOVE FD-Salary TO WS-High-Salary
-              MOVE R1-Name-Combined TO WS-High-Salary-Name 
+              MOVE R1-Name-Combined TO WS-High-Salary-Name
            END-IF.
 
            MOVE +1 TO R1-Line-Advance.
            MOVE R1-Detail-Line1 TO R1-Print-Line.
-           PERFORM 6100-Write-R1. 
+           PERFORM 6100-Write-R1.
 
        3000-End-Job.
            MOVE WS-Total-Salary TO R1-FT-Total-Salary.
@@ -306,24 +307,23 @@
            PERFORM 6130-Write-R1-Footer.
 
            CLOSE ACCTREC
-                 RPTFILE.                 
+                 RPTFILE.
 
        5000-Read-ACCTREC.
            READ ACCTREC
               AT END SET WS-ACCTREC-EOF TO TRUE
            END-READ.
-           IF WS-ACCTREC-Good
-              ADD +1 TO FD-ACCTREC-Record-Cnt
-           ELSE
-              IF WS-ACCTREC-EOF
-                 NEXT SENTENCE
-              ELSE
+           EVALUATE TRUE
+              WHEN WS-ACCTREC-Good
+                 ADD +1 TO FD-ACCTREC-Record-Cnt
+              WHEN WS-ACCTREC-EOF
+                 CONTINUE
+              WHEN OTHER
                  DISPLAY "** ERROR **: 5000-Read-ACCTREC"
                  DISPLAY "Read ACCTREC Failed."
                  DISPLAY "File Status: " WS-ACCTREC-Status
                  GOBACK
-              END-IF
-           END-IF.
+           END-EVALUATE.
 
 
        6100-Write-R1.
@@ -345,18 +345,18 @@
            ADD +1 TO R1-Page-Count.
            MOVE R1-Page-Count TO R1-HDR-Page-Count.
            MOVE R1-Page-Header TO FD-Report-Record.
-           WRITE FD-Report-Record AFTER ADVANCING PAGE. 
+           WRITE FD-Report-Record AFTER ADVANCING PAGE.
            MOVE R1-Column-Header1 TO FD-Report-Record.
-           WRITE FD-Report-Record AFTER ADVANCING 2 LINES. 
+           WRITE FD-Report-Record AFTER ADVANCING 2 LINES.
            MOVE R1-Column-Header2 TO FD-Report-Record.
-           WRITE FD-Report-Record AFTER ADVANCING 1 LINES.         
+           WRITE FD-Report-Record AFTER ADVANCING 1 LINES.
       *     MOVE SPACES TO R1-Print-Line.
       *    Remember to double-check this number.
            MOVE 4 TO R1-Line-Count.
 
        6120-Write-R1-Detail.
            MOVE R1-Print-Line TO FD-Report-Record
-           WRITE FD-Report-Record 
+           WRITE FD-Report-Record
               AFTER ADVANCING R1-Line-Advance LINES.
            ADD R1-Line-Advance TO R1-Line-Count.
            ADD +1 TO R1-Lines-Written.
@@ -369,13 +369,13 @@
 
            MOVE R1-Footer1 TO FD-Report-Record.
            WRITE FD-Report-Record AFTER ADVANCING 2 LINES.
-              
+
            MOVE R1-Footer2 TO FD-Report-Record.
            WRITE FD-Report-Record AFTER ADVANCING 1 LINES.
-              
+
            MOVE R1-Footer3 TO FD-Report-Record.
            WRITE FD-Report-Record AFTER ADVANCING 1 LINES.
-              
+
            MOVE R1-Footer4 TO FD-Report-Record.
            WRITE FD-Report-Record AFTER ADVANCING 1 LINES.
 
