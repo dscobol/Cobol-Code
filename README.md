@@ -45,6 +45,6 @@ See README4 for the list of Enterprise COBOL for Business Application Programmin
 
 *Note*: You may notice a difference betweeen this repository and Cobol-Projects.
 
-I have decided to not write programs for the MVS environment. While that was interesting, if I wanted to go back to 1974 (the date of the COBOL compiler on the MVS system), I could probably find more interesting things to study from that time period.
+I have decided to not write programs for the MVS 3.8 environment. While that was interesting, if I wanted to go back to 1974 (the date of the COBOL compiler on the MVS 3.8(TK4-) system), I could probably find more interesting things to study from that time period.
 
 And I decided to restructure the repo in a different way.
